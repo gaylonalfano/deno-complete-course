@@ -43,6 +43,7 @@ async function loadPlanetsData() {
   /* return planets; */
   // Use the lodash _.pick() helper function
   return planets.map((planet) => {
+    // Print out the results
     console.log(
       pick(planet, [
         "koi_prad",
