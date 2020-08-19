@@ -1,4 +1,6 @@
-import { Application } from "https://deno.land/x/oak@v6.0.1/mod.ts";
+import { Application, send } from "https://deno.land/x/oak@v6.0.1/mod.ts";
+
+import router from "./api.ts"; // Tutorial used 'api'
 
 const app = new Application();
 const PORT = 8000;
@@ -24,20 +26,34 @@ app.use(async (ctx, next) => {
   ctx.response.headers.set("X-Response-Time", `${delta}ms`);
 });
 
-/* Register middleware functions executed for each request */
-app.use(async (ctx, next) => {
-  /* Specify what to send back to the incoming HTTP request */
-  ctx.response.body = `
-    {___     {__      {_         {__ __        {_       
-    {_ {__   {__     {_ __     {__    {__     {_ __     
-    {__ {__  {__    {_  {__     {__          {_  {__    
-    {__  {__ {__   {__   {__      {__       {__   {__   
-    {__   {_ {__  {______ {__        {__   {______ {__  
-    {__    {_ __ {__       {__ {__    {__ {__       {__ 
-    {__      {__{__         {__  {__ __  {__         {__
-                    Mission Control API;
-  `;
-  await next();
+/* Register our router-defined middleware */
+/* Let's use our new router for our root path */
+app.use(router.routes());
+app.use(router.allowedMethods());
+
+/* Register our static files middleware (NOT defined by our router) */
+/* Serve our static files (frontend website) using send() */
+/* After this we can access the site (endpoint) at localhost:8000/index.html */
+/* send(ctx, path, options) */
+app.use(async (ctx) => {
+  /* define a filePath that points to the file name coming from the request */
+  /* This filePath is what we're being asked for (the request) */
+  const filePath = ctx.request.url.pathname;
+  /* Specify which files to serve in our public dir to whitelist */
+  const fileWhitelist = [
+    "/index.html",
+    "/images/favicon.png",
+    "/javascripts/script.js",
+    "/stylesheets/style.css",
+  ];
+  /* Security: Let's check that our filePath is within our fileWhitelist */
+  /* Only then do we send the files back to the browser */
+  if (fileWhitelist.includes(filePath)) {
+    /* Use SendOptions interface to restrict file access to our public dir */
+    await send(ctx, filePath, {
+      root: `${Deno.cwd()}/public`,
+    });
+  }
 });
 
 /* Let's specify what to execute if ran as standalone module */
