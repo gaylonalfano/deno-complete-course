@@ -1,3 +1,4 @@
+// @ts-nocheck
 let launches = [];
 
 const numberHeading = "No.".padStart(5);
@@ -19,23 +20,32 @@ function loadLaunches() {
   // Load launches and sort by flight number.
 }
 
-function loadPlanets() {
+async function loadPlanets() {
   // TODO: Once API is ready.
-  // Quick mock up of the frontend functionality
-  const planets = [
-    {
-      id: 1,
-      kepler_name: "Hyperion",
-    },
-    {
-      id: 2,
-      kepler_name: "Laconia",
-    },
-  ];
-  const planetSelector = document.getElementById("planets-selector");
-  planets.forEach((planet) => {
-    planetSelector.innerHTML += `<option value="${planet.kepler_name}">${planet.kepler_name}</option>`;
-  });
+  // // Quick mock up of the frontend functionality
+  // const planets = [
+  //   {
+  //     id: 1,
+  //     kepler_name: "Hyperion",
+  //   },
+  //   {
+  //     id: 2,
+  //     kepler_name: "Laconia",
+  //   },
+  // ];
+
+  // TODO: Let's see if we can fetch planets from /planets endpoint now
+  return await fetch("/planets")
+    // take the body of the response and parse as JSON
+    .then((planetsResponse) => planetsResponse.json())
+    // Iterate through the JSON object series of planets
+    .then((planets) => {
+      // Render our HTML using vanilla JS.
+      const planetSelector = document.getElementById("planets-selector");
+      planets.forEach((planet) => {
+        planetSelector.innerHTML += `<option value="${planet.kepler_name}">${planet.kepler_name}</option>`;
+      });
+    });
 }
 
 function abortLaunch() {
@@ -129,4 +139,3 @@ window.onload = () => {
   loadLaunches();
   loadPlanets();
 };
-
