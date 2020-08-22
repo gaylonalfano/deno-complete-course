@@ -26,7 +26,7 @@ app.use(async (ctx, next) => {
   ctx.response.headers.set("X-Response-Time", `${delta}ms`);
 });
 
-/* Register our router-defined middleware */
+/* Register our router-defined middleware (from api.ts) */
 /* Let's use our new router for our root path */
 app.use(router.routes());
 app.use(router.allowedMethods());
