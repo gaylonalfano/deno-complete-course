@@ -21,6 +21,25 @@ await log.setup({
   },
 });
 
+// Add event listener since app extends the EventType interface like browser
+app.addEventListener("error", (event) => {
+  // The final spot for error handling
+  // Let's add the logging here
+  log.error(event.error);
+});
+
+// Add error-handling middleware
+app.use(async (ctx, next) => {
+  // See if next() middleware has an error
+  try {
+    await next();
+  } catch (error) {
+    log.error(error);
+    ctx.response.body = "Internal server error.";
+    throw error;
+  }
+});
+
 /* Add a logging middleware */
 app.use(async (ctx, next) => {
   await next();
