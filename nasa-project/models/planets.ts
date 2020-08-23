@@ -18,16 +18,9 @@ type Planet = Record<string, string>;
 // Define a new array/list to store our earth-like planets
 let planets: Array<Planet>;
 
-async function loadPlanetsData() {
-  const path = join("data", "kepler_exoplanets_nasa.csv");
-  const file = await Deno.open(path);
-  const bufReader = new BufReader(file);
-  const result = await parse(bufReader, { header: true, comment: "#" });
-  Deno.close(file.rid);
-
-  /* console.log(result); */
-
-  const planets = (result as Array<Planet>).filter((planet) => {
+// Refactor
+export function filterHabitablePlanets(planets: Array<Planet>) {
+  return planets.filter((planet: Planet) => {
     // Convert to Number() since CSV is all text
     const planetaryRadius = Number(planet["koi_prad"]);
     const stellarMass = Number(planet["koi_smass"]);
@@ -43,6 +36,17 @@ async function loadPlanetsData() {
       stellarRadius < 1.01
     );
   });
+}
+
+async function loadPlanetsData() {
+  const path = join("data", "kepler_exoplanets_nasa.csv");
+  const file = await Deno.open(path);
+  const bufReader = new BufReader(file);
+  const result = await parse(bufReader, { header: true, comment: "#" });
+  Deno.close(file.rid);
+
+  // Use our new refactored function but on the result of parsing CSV
+  const planets = filterHabitablePlanets(result as Array<Planet>);
 
   //  console.log(result);
   /* return planets; */
