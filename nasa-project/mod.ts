@@ -1,3 +1,5 @@
+import * as log from "https://deno.land/std/log/mod.ts";
+
 import { Application, send } from "https://deno.land/x/oak@v6.0.1/mod.ts";
 
 import router from "./api.ts"; // Tutorial used 'api'
@@ -5,12 +7,26 @@ import router from "./api.ts"; // Tutorial used 'api'
 const app = new Application();
 const PORT = 8000;
 
+// Add log module features to our app right before middleware
+await log.setup({
+  handlers: {
+    console: new log.handlers.ConsoleHandler("INFO"),
+  },
+  loggers: {
+    // configure default logger available via methods above
+    default: {
+      level: "INFO",
+      handlers: ["console"],
+    },
+  },
+});
+
 /* Add a logging middleware */
 app.use(async (ctx, next) => {
   await next();
   /* We now have access to the response.headers from downstream middleware */
   const time = ctx.response.headers.get("X-Response-Time");
-  console.log(`${ctx.request.method} ${ctx.request.url} ${time}`);
+  log.info(`${ctx.request.method} ${ctx.request.url} ${time}`);
 });
 
 /* Measure time it takes to respond to a request */
@@ -58,6 +74,7 @@ app.use(async (ctx) => {
 
 /* Let's specify what to execute if ran as standalone module */
 if (import.meta.main) {
+  log.info(`Starting server on port ${PORT}...`);
   /* Let's get our app server started and listening to specified port */
   /* Call await because app.listen is going to be an async function */
   await app.listen({

@@ -1,6 +1,7 @@
 import { join } from "https://deno.land/std/path/mod.ts";
 import { BufReader } from "https://deno.land/std/io/bufio.ts";
 import { parse } from "https://deno.land/std/encoding/csv.ts";
+import * as log from "https://deno.land/std/log/mod.ts";
 /* import * as _ from "https://raw.githubusercontent.com/lodash/lodash/4.17.15-es/lodash.js"; */
 /* import * as _ from "https://deno.land/x/lodash@4.17.15-es/lodash.js"; */
 import { pick } from "https://deno.land/x/lodash@4.17.15-es/lodash.js";
@@ -67,7 +68,7 @@ async function loadPlanetsData() {
 
 /* This is our basic planets database stored in Deno's memory */
 planets = await loadPlanetsData();
-console.log(`${planets.length} habitable planets found!`);
+log.info(`${planets.length} habitable planets found!`);
 
 /* Now we need a way to access this planets db. This represents our data access layer */
 /* Meaning the way our API accesses the data we get back from our CSV */
