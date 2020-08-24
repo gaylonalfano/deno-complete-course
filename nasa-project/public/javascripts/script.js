@@ -15,13 +15,19 @@ function initValues() {
   launchDaySelector.setAttribute("value", today);
 }
 
-function loadLaunches() {
-  // TODO: Once API is ready.
+async function loadLaunches() {
   // Load launches and sort by flight number.
+  return await fetch("/launches")
+    .then((launchesResponse) => launchesResponse.json())
+    .then((fetchedLaunches) => {
+      // assign our global launches variable to these fetchedLaunches
+      launches = fetchedLaunches.sort((a, b) => {
+        return a.flightNumber < b.flightNumber;
+      });
+    });
 }
 
 async function loadPlanets() {
-  // TODO: Once API is ready.
   // // Quick mock up of the frontend functionality
   // const planets = [
   //   {
