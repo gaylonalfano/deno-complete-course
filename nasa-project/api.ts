@@ -49,6 +49,27 @@ router.get("/launches/:id", (ctx) => {
   }
 });
 
+router.post("/launches", async (ctx) => {
+  // Create a new launch
+  // How to store it?? Do I define an interface or an empty object?
+  // will the created launch details be in the request body?
+  // TURNS OUT I WAS WRONG! Let's get the body from the request
+  // Thankfully Oak has a handy body() method to auto-parse the content
+  // We now have a valid JS object to work with.
+  // Need to specify the type for incoming request.body otherwise error:
+  const result = ctx.request.body();
+  const data: launches.Launch = await result.value;
+
+  // Now with a valid JS object we're going to want to call a function
+  // on our launches model (from launches.ts). We'll call it addOneLaunch()
+  // which takes the new launch object retrieved from body.value property
+  launches.addOneLaunch(data);
+
+  // Let's send the client a response if no errors were thrown up to this point.
+  ctx.response.body = { success: true };
+  ctx.response.status = 201;
+});
+
 /* Let's export our router using default since it's the only thing we're */
 /* exporting from this module */
 export default router;

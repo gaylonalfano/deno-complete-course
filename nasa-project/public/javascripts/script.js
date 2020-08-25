@@ -68,24 +68,29 @@ function submitLaunch() {
   const flightNumber = launches[launches.length - 1]?.flightNumber + 1 || 1;
 
   // TODO: Once API is ready.
-  // Submit above data to launch system and reload launches.
-  // Mock up a launch object
-  const launch = {
-    destination_planet: target,
-    launch_date: launchDate,
-    mission_name: mission,
-    rocket_type: rocket,
-    flight_number: flightNumber,
-    customers: ["NASA", "ZTM"],
-    upcoming: true,
-  };
-
-  // Need an onclick event handler to append to launches
-  // Add the launch object to launches
-  launches.push(launch); // return???
-
-  // Show the launch-success message by unhiding the element
-  document.getElementById("launch-success").hidden = false;
+  // Now that our API is ready let's make a POST to /launches endpoint
+  return (
+    fetch("/launches", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        launchDate: Math.floor(launchDate / 1000),
+        flightNumber,
+        mission,
+        rocket,
+        target,
+      }),
+    })
+      // Submit above data to launch system and reload launches.
+      // Use .then() to show the launch-success message by unhiding the element
+      .then(() => {
+        document.getElementById("launch-success").hidden = false;
+      })
+      // Use .then(loadLaunches); to make a GET request to /launches
+      .then(loadLaunches)
+  );
 }
 
 function listUpcoming() {

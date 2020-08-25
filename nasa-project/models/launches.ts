@@ -5,7 +5,7 @@ import * as _ from "https://deno.land/x/lodash@4.17.15-es/lodash.js";
 /* Let's use a Map k:v pairs where k is string or symbol */
 /* Objects' keys are strings or symbols. Map keys can be functions! */
 /* Maps are also ordered collections. */
-interface Launch {
+export interface Launch {
   flightNumber: number;
   mission: string;
   rocket: string;
@@ -34,7 +34,7 @@ await log.setup({
 
 async function downloadLaunchData() {
   log.info("Downloading launch data...");
-  log.warning("THIS IS A WARNING!");
+  /* log.warning("THIS IS A WARNING!"); */
   const response = await fetch("https://api.spacexdata.com/v3/launches", {
     method: "GET",
   });
@@ -96,6 +96,19 @@ export function getOneLaunch(id: number) {
     return launches.get(id);
   }
   return null;
+}
+
+// Create something like an INSERT query for our POST a new launch endpoint
+export function addOneLaunch(data: Launch) {
+  // Add this new data (launch) to our launches Map using .set()
+  launches.set(
+    data.flightNumber,
+    Object.assign(data, {
+      // Add/update some default properties to our data object (Launch)
+      upcoming: true,
+      customers: ["ZTM", "NASA"],
+    })
+  );
 }
 
 /* /1* My own custom POST solution *1/ */
