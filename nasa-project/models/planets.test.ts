@@ -1,7 +1,4 @@
-import {
-  assertEquals,
-  assertNotEquals,
-} from "https://deno.land/std/testing/asserts.ts";
+import { assertEquals, assertNotEquals } from "../test_deps.ts";
 
 // Long-form syntax
 Deno.test({

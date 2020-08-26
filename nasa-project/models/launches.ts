@@ -1,6 +1,5 @@
 /* ======= Logging */
-import * as log from "https://deno.land/std/log/mod.ts";
-import * as _ from "https://deno.land/x/lodash@4.17.15-es/lodash.js";
+import { log, flatMap } from "../deps.ts";
 
 /* Let's use a Map k:v pairs where k is string or symbol */
 /* Objects' keys are strings or symbols. Map keys can be functions! */
@@ -49,10 +48,10 @@ async function downloadLaunchData() {
 
   /* Let's go over the launch data and store within our launches Map */
   for (const launch of launchData) {
-    /* Create a new var for storying customers data using lodash _.flatMap() */
+    /* Create a new var for storying customers data using lodash flatMap() */
     const payloads = launch["rocket"]["second_stage"]["payloads"];
-    /* const customers = _.flatMap(payloads, (payload) => payload["customers"]); */
-    const customers = _.flatMap(payloads, (payload: any) => {
+    /* const customers = flatMap(payloads, (payload) => payload["customers"]); */
+    const customers = flatMap(payloads, (payload: any) => {
       return payload["customers"];
     });
 

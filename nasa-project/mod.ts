@@ -1,6 +1,4 @@
-import * as log from "https://deno.land/std/log/mod.ts";
-
-import { Application, send } from "https://deno.land/x/oak@v6.0.1/mod.ts";
+import { log, Application, send } from "./deps.ts";
 
 import router from "./api.ts"; // Tutorial used 'api'
 
