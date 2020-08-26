@@ -1,5 +1,5 @@
 # https://hub.docker.com/r/hayd/deno/tags
-FROM docker pull hayd/deno:alpine-1.3.1
+FROM hayd/deno:alpine-1.3.1
 
 # Now need a container for our application
 # This is just like 'cd' command
