@@ -49,6 +49,18 @@ router.get("/launches/:id", (ctx) => {
   }
 });
 
+router.delete("/launches/:id", (ctx) => {
+  // An ID must be sent over otherwise it fails. Let's check params exist
+  if (ctx.params?.id) {
+    // Access our launches model and delete the corresponding launch ID
+    // Technically we're only setting success and upcoming to false
+    const result = launches.removeOneLaunch(Number(ctx.params.id));
+    ctx.response.body = { success: result };
+  } else {
+    ctx.throw(400, "Launch with that ID doesn't exist.");
+  }
+});
+
 router.post("/launches", async (ctx) => {
   // Create a new launch
   // How to store it?? Do I define an interface or an empty object?

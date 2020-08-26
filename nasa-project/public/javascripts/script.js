@@ -54,9 +54,20 @@ async function loadPlanets() {
     });
 }
 
-function abortLaunch() {
+function abortLaunch(id) {
   // TODO: Once API is ready.
   // Delete launch and reload launches.
+  // Let's send a DELETE request to our endpoint with the id
+  return (
+    fetch(`/launches/${id}`, {
+      method: "delete",
+    })
+      // After the fetch resolves and we get a success response
+      // make another GET request to /launches to reload
+      .then(loadLaunches)
+      // And we want to call the listUpcoming as well
+      .then(listUpcoming)
+  );
 }
 
 function submitLaunch() {

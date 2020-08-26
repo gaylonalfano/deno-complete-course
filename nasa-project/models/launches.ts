@@ -98,6 +98,17 @@ export function getOneLaunch(id: number) {
   return null;
 }
 
+// Create a DELETE data access function to remove a launch from our launches model
+export function removeOneLaunch(id: number) {
+  // Rather than completely deleting let's just set success = false
+  const aborted = launches.get(id);
+  if (aborted) {
+    aborted.upcoming = false;
+    aborted.success = false;
+  }
+  return aborted;
+}
+
 // Create something like an INSERT query for our POST a new launch endpoint
 export function addOneLaunch(data: Launch) {
   // Add this new data (launch) to our launches Map using .set()
