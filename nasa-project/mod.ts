@@ -78,6 +78,7 @@ app.use(async (ctx) => {
     "/images/favicon.png",
     "/javascripts/script.js",
     "/stylesheets/style.css",
+    "/videos/space.mp4",
   ];
   /* Security: Let's check that our filePath is within our fileWhitelist */
   /* Only then do we send the files back to the browser */
