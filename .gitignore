@@ -98,3 +98,6 @@ _dist
 
 # DS_Store
 .DS_Store
+
+# CSV
+*.csv
