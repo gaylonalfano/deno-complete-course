@@ -11,10 +11,14 @@ async function loadStudentsData() {
   const file = await Deno.open(path);
   const bufReader = new BufReader(file);
   // parse used to have 'headers' prop. Now it's skipFirstRow: boolean
-  const result = await parse(bufReader, { skipFirstRow: true });
+  // NOTE: Use lazyQuotes for bare " quote
+  const result = await parse(bufReader, {
+    skipFirstRow: true,
+    lazyQuotes: true,
+  });
   Deno.close(file.rid);
 
-  console.log(result);
+  console.log((result as Student[])[0]["FirstName"]);
 }
 
 // Test it out
