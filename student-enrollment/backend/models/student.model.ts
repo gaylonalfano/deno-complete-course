@@ -74,7 +74,7 @@ students = await loadStudentsData();
 log.info(`${students.length} students loaded!`);
 
 // ===== HANDLERS/CONTROLLERS
-export function getOneStudent(id: string) {
+export function getOneStudentById(id: string) {
   // Ex.2026067, 2030090, 2021340
   // console.log(students); // works
   const studentList = students.filter((student) => {
@@ -86,6 +86,11 @@ export function getOneStudent(id: string) {
   // console.log(studentList); // []
   // console.log(studentList.length); // 0
   return studentList.length ? studentList[0] : null;
+}
+
+// TODO: create function to retrieve by grade level
+export function getAllStudentsByGrade(grade: string) => {
+  return
 }
 
 // Now we need a way to access this students db/model. This represents our data

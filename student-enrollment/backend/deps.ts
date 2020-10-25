@@ -11,5 +11,8 @@ export {
   RouterContext,
   send,
 } from "https://deno.land/x/oak@v6.3.1/mod.ts";
+// Drash
+export { Drash } from "https://deno.land/x/drash@v1.2.5/mod.ts";
+
 // lodash
 export { pick } from "https://deno.land/x/lodash@4.17.15-es/lodash.js";
