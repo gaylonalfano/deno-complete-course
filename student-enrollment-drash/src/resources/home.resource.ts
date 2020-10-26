@@ -10,18 +10,21 @@ export default class HomeResource extends Drash.Http.Resource {
     const vuetwitter: string | null = this.request.getPathParam("vuetwitter");
     const staticjs: string | null = this.request.getPathParam("staticjs");
 
+    // ===== WORKING Example (just comment out one or the other render)
     try {
       // STATIC/BASIC Drash example:
       // this.response.body = this.response.render("/staticjs.html");
 
-      // VUE CLIENT SIDE RENDER example:
+      // VUE TWITTER CLIENT SIDE RENDER example:
       // Using raw Deno - **ERROR** for some reason...
       // let fileContentsRaw = Deno.readFileSync("../public/views/vue_index.html");
       // let template = new TextDecoder().decode(fileContentsRaw);
       // this.response.body = template;
-
       // Using helper function - **WORKS** Configured with view_path in server
-      this.response.body = this.response.render("/vuetwitter.html");
+      // this.response.body = this.response.render("/vuetwitter.html");
+
+      // VUE STUDENTS CLIENT SIDE RENDER example:
+      this.response.body = this.response.render("/vuestudents.html")
     } catch (error) {
       throw new Drash.Exceptions.HttpException(
         400,
