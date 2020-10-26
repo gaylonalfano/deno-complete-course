@@ -79,6 +79,7 @@ export function getOneStudentById(id: string) {
   // console.log(students); // works
   const studentList = students.filter((student) => {
     // NOTE: Must use 'return' with .filter()!
+    // TODO Add some error checking logic if not found
     return student["Student Number"] === id;
     // students["Student Number"] === id;
   });
@@ -89,9 +90,13 @@ export function getOneStudentById(id: string) {
 }
 
 // TODO: create function to retrieve by grade level
-// export function getAllStudentsByGrade(grade: string) => {
-//   return
-// }
+export function getAllStudentsByGrade(grade: string) {
+  const studentList = students.filter((student) => {
+    return student["Grade"] === grade;
+  });
+
+  return studentList.length ? studentList : null;
+}
 
 // Now we need a way to access this students db/model. This represents our data
 // access layer, meaning the way our API accesses the data we get back from the CSV.

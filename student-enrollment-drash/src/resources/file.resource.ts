@@ -10,6 +10,7 @@ export default class FileResource extends Drash.Http.Resource {
     const fileContents = new TextDecoder().decode(
       Deno.readFileSync("." + path)
     );
+    console.log(`Requesting: ${path}`)
     this.response.body = fileContents;
     return this.response;
   }
