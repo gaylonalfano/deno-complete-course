@@ -13,6 +13,7 @@ let students: Array<Student>;
 
 async function loadStudentsData() {
   const path = join("./data", "20200901_Active_Students.csv");
+  console.log(path);
   const file = await Deno.open(path);
   const bufReader = new BufReader(file);
   // parse used to have 'headers' prop. Now it's skipFirstRow: boolean

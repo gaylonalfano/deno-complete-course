@@ -20,6 +20,7 @@ export default class StudentResource extends Drash.Http.Resource {
     // prints to REQUEST/curl log
     // this.response.body += ` You passed in the following path params: |${id}|${grade}|`;
     // TODO Could add some error/exception handling logic
+    // TODO Could add a log for the number of records returned
 
     if (grade) {
       const students = StudentModel.getAllStudentsByGrade(grade);

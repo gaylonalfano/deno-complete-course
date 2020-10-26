@@ -5,11 +5,11 @@ import StudentResource from "./resources/student.resource.ts";
 import FileResource from "./resources/file.resource.ts";
 
 // ===== SINGLE DIRECTORY (/backend/public) **WORKS**
-// TODO Add logger middleware
+// TODO Add logger middleware: https://github.com/drashland/deno-drash-realworld-example-app/blob/330bc0ea52875b0b61af85baea903942db24fe53/src/app.ts
 const server = new Drash.Http.Server({
   response_output: "text/html",
   resources: [HomeResource, StudentResource, FileResource],
-  directory: ".",  // "/path/to/DRASH/project"
+  directory: ".", // "/path/to/DRASH/project"
   static_paths: ["/public"], // **Routes this path to any client i.e., makes it publicly available
   views_path: "./public/views",
 });
