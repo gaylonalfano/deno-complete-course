@@ -1,7 +1,7 @@
 import { Drash } from "../deps.ts";
 
 export default class HomeResource extends Drash.Http.Resource {
-  static paths = ["/", "/:vuetwitter?", "/:drashstatic?"];
+  static paths = ["/"];
 
   public GET() {
     // Can use Drash's this.response.render() for HTML (similar to Oaks's send())
@@ -13,10 +13,10 @@ export default class HomeResource extends Drash.Http.Resource {
     // ===== WORKING Example (just comment out one or the other render)
     try {
       // STATIC/BASIC Drash example:
-      this.response.body = this.response.render("/drashstatic.html");
+      // this.response.body = this.response.render("/drashstatic.html");
 
-      // BASIC JS/TS ONLY example:
-      // this.response.body = this.response.render("/index.html");
+      // MYSTUDENTS example:
+      this.response.body = this.response.render("/mystudents.html");
 
       // VUE TWITTER CLIENT SIDE RENDER example:
       // Using raw Deno - **ERROR** for some reason...

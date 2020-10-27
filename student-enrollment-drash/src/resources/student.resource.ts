@@ -24,16 +24,56 @@ export default class StudentResource extends Drash.Http.Resource {
 
     if (grade) {
       const students = StudentModel.getAllStudentsByGrade(grade);
-      this.response.body = JSON.stringify(students)
+      this.response.body = JSON.stringify(students);
     } else if (id) {
       // console.log("Getting student by ID"); // prints to SERVER log
       const student = StudentModel.getOneStudentById(id);
-      this.response.body = JSON.stringify(student);
+      // console.log(`Student record: ${student!.FirstName}`);
+      // this.response.body = JSON.stringify(student);
+      // this.response.body = this.response.render("/student_profile.html")
+      // ==== Content Negotiation https://drash.land/drash/#/advanced-tutorials/content-negotiation/part-4
+      // Read the Accept header and check if text/html is acceptable
+      if (this.request.accepts("text/html")) {
+        return this.generateHtml(student);
+      }
+      // Default to a JSON representation
+      return this.generateJson(student);
     } else {
       const students = StudentModel.getAllStudents();
       this.response.body = JSON.stringify(students);
     }
     console.log(`Request: ${path}`);
     return this.response;
+  }
+
+  // Content Negotiation: https://drash.land/drash/#/advanced-tutorials/content-negotiation/part-4
+  protected generateHtml(student: any) {
+    this.response.headers.set("Content-Type", "text/html");
+    try {
+      let html = this.readFileContents("./public/views/student_profile.html");
+      html = html
+        .replace(/\{\{ FirstName \}\}/, student.FirstName)
+        .replace(/\{\{ LastName \}\}/, student.LastName)
+        .replace(/\{\{ Grade \}\}/, student.Grade)
+        .replace(/\{\{ StudentNumber \}\}/, student.StudentNumber)
+        .replace(/\{\{ NewThisYear \}\}/, student.NewThisYear);
+      this.response.body = html;
+      return this.response;
+    } catch (error) {
+      throw new Drash.Exceptions.HttpException(500, error.message);
+    }
+  }
+
+  protected generateJson(student: any) {
+    this.response.headers.set("Content-Type", "application/json");
+    this.response.body = student;
+    return this.response;
+  }
+
+  protected readFileContents(file: string) {
+    let fileContentsRaw = Deno.readFileSync(file);
+    const decoder = new TextDecoder();
+    let decoded = decoder.decode(fileContentsRaw);
+    return decoded;
   }
 }

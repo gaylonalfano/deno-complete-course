@@ -47,11 +47,11 @@ async function loadStudentsData() {
     return pick(student, [
       "FirstName",
       "LastName",
-      "Student Number",
+      "StudentNumber",
       "Grade",
-      "Student 1st Lang",
+      "Student1stLang",
       "NewThisYear",
-      "Start Date",
+      "StartDate",
       "Date",
     ]);
   });
@@ -81,8 +81,8 @@ export function getOneStudentById(id: string) {
   const studentList = students.filter((student) => {
     // NOTE: Must use 'return' with .filter()!
     // TODO Add some error checking logic if not found
-    return student["Student Number"] === id;
-    // students["Student Number"] === id;
+    return student["StudentNumber"] === id;
+    // students["StudentNumber"] === id;
   });
 
   // console.log(studentList); // []
