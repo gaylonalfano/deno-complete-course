@@ -4,15 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Drash + Vue</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css"/>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css"
+    />
   </head>
   <body>
     <div id="vuestudents" style="max-width: 640px; margin: 0 auto;">
       <h1 class="text-5xl">{{ title }}</h1>
-      <p class="text-xl mb-5">{{ description }}</p> 
+      <p class="text-xl mb-5">{{ description }}</p>
+      <form>
+        <label for="student_id">Student ID</label>
+        <input
+          type="text"
+          name="student_id"
+          placeholder="2020000"
+          value="{{ student_id_value }}"
+        />
+        <label for="grade">Grade Level</label>
+        <input type="text" name="grade" placeholder="PK" value="{{ grade }}" />
+      </form>
     </div>
   </body>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="/public/js/vuestudents.js"></script>
 </html>
-

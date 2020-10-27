@@ -1,19 +1,22 @@
 import { Drash } from "../deps.ts";
 
 export default class HomeResource extends Drash.Http.Resource {
-  static paths = ["/", "/:vuetwitter?", "/:staticjs?"];
+  static paths = ["/", "/:vuetwitter?", "/:drashstatic?"];
 
   public GET() {
     // Can use Drash's this.response.render() for HTML (similar to Oaks's send())
     // Saves reading, decoding and displaying the content
     // https://youtu.be/oTH8WZbRC8w?t=167
     const vuetwitter: string | null = this.request.getPathParam("vuetwitter");
-    const staticjs: string | null = this.request.getPathParam("staticjs");
+    const drashstatic: string | null = this.request.getPathParam("drashstatic");
 
     // ===== WORKING Example (just comment out one or the other render)
     try {
       // STATIC/BASIC Drash example:
-      // this.response.body = this.response.render("/staticjs.html");
+      this.response.body = this.response.render("/drashstatic.html");
+
+      // BASIC JS/TS ONLY example:
+      // this.response.body = this.response.render("/index.html");
 
       // VUE TWITTER CLIENT SIDE RENDER example:
       // Using raw Deno - **ERROR** for some reason...
@@ -24,7 +27,7 @@ export default class HomeResource extends Drash.Http.Resource {
       // this.response.body = this.response.render("/vuetwitter.html");
 
       // VUE STUDENTS CLIENT SIDE RENDER example:
-      this.response.body = this.response.render("/vuestudents.html")
+      // this.response.body = this.response.render("/vuestudents.html");
     } catch (error) {
       throw new Drash.Exceptions.HttpException(
         400,
@@ -32,7 +35,6 @@ export default class HomeResource extends Drash.Http.Resource {
       );
     }
     return this.response;
-
 
     // ===== BROKEN attempt at loading different pages:
     // try {
