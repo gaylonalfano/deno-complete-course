@@ -9,18 +9,39 @@
     <script src="/public/js/mystudents.js"></script>
   </head>
   <body>
-    <div class="search-input">
-      <form>
-        <div class="form-control">
-          <label for="student-id">Student Id</label>
-          <input type="text" id="student-id" placeholder="2000000" />
-        </div>
-        <div class="form-control">
-          <label for="grade">Grade</label>
-          <input type="text" id="grade" placeholder="PS" />
-        </div>
-        <button id="search-button" type="button">Search</button>
-      </form>
-    </div>
+    <header>
+      <div class="search-container">
+        <h1>Student Search</h1>
+        <form id="search-form">
+          <div class="form-control">
+            <label for="student-id">Student Id</label>
+            <input
+              type="text"
+              id="student-id"
+              name="student-id"
+              required
+              pattern="\d{7}"
+              minlength="7"
+              maxlength="7"
+            />
+          </div>
+          <div class="form-control">
+            <label for="grade">Grade</label>
+            <input
+              type="text"
+              id="grade"
+              name="grade"
+              required
+              pattern="[Pp][Kk]|[Pp][Ss]|[Kk]|\d{1,2}"
+            />
+          </div>
+          <button id="search-button" type="button">Search</button>
+        </form>
+      </div>
+    </header>
+
+    <section class="search-result" id="search-result">
+      <h1>Results will be displayed here.</h1>
+    </section>
   </body>
 </html>
