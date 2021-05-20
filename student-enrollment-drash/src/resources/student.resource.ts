@@ -12,6 +12,10 @@ export default class StudentResource extends Drash.Http.Resource {
     const id: string | null = this.request.getPathParam("id");
     const grade: string | null = this.request.getPathParam("grade");
     const path = this.request.url_path;
+    const requestHeaders = this.request.headers.get("Accept")?.split(";");
+
+    console.log(`Request: ${path}`);
+    console.log(`Request 'Accept' headers: ${requestHeaders}`);
 
     // URL Query Params eg /students?grade=5 (alternative to Path Params)
     // const id: string | null = this.request.getUrlQueryParam("id");
@@ -24,6 +28,7 @@ export default class StudentResource extends Drash.Http.Resource {
 
     if (grade) {
       const students = StudentModel.getAllStudentsByGrade(grade);
+      console.log(`Response headers: ${this.response.headers.get("Accept")}`);
       this.response.body = JSON.stringify(students);
     } else if (id) {
       // console.log("Getting student by ID"); // prints to SERVER log
@@ -34,15 +39,16 @@ export default class StudentResource extends Drash.Http.Resource {
       // ==== Content Negotiation https://drash.land/drash/#/advanced-tutorials/content-negotiation/part-4
       // Read the Accept header and check if text/html is acceptable
       if (this.request.accepts("text/html")) {
+        console.log(`Response headers: ${this.response.headers.get("Accept")}`);
         return this.generateHtml(student);
       }
       // Default to a JSON representation
+      console.log(`Response headers: ${this.response.headers.get("Accept")}`);
       return this.generateJson(student);
     } else {
       const students = StudentModel.getAllStudents();
       this.response.body = JSON.stringify(students);
     }
-    console.log(`Request: ${path}`);
     return this.response;
   }
 
