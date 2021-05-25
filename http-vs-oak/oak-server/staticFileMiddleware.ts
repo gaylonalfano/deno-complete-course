@@ -1,4 +1,4 @@
-import { Context, send } from "https://deno.land/x/oak@v6.1.0/mod.ts";
+import { Context, send } from "https://deno.land/x/oak@v7.5.0/mod.ts";
 
 export const staticFileMiddleware = async (ctx: Context, next: Function) => {
   // Check if the public file exists and return if so. Otherwise, continue to

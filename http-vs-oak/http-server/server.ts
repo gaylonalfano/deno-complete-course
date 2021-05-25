@@ -1,5 +1,6 @@
-import { serve } from "https://deno.land/std@0.62.0/http/server.ts";
-import { serveFile } from "https://deno.land/std@0.62.0/http/file_server.ts";
+// Tutorial: https://youtu.be/sFqihYDpoLc
+import { serve } from "https://deno.land/std@0.97.0/http/server.ts";
+import { serveFile } from "https://deno.land/std@0.97.0/http/file_server.ts";
 
 const server = serve({ port: 8000 });
 console.log("http://localhost:8000/");
@@ -20,6 +21,8 @@ async function fileExists(path: string) {
 // Infinite for loop handling all requests coming in
 for await (const req of server) {
   const path = `${Deno.cwd()}/public${req.url}`;
+  console.log("req.url: ", req.url);
+  console.log("path: ", path);
   // check if public file exists
   if (await fileExists(path)) {
     // return content of the file
@@ -35,9 +38,8 @@ for await (const req of server) {
   } else if (req.url === "/about") {
     req.respond({ body: "About" });
   } else {
-    // Note: If content doesn't exist then server crashes!
-    // Therefore need to use try/catch
-    try {
-    } catch (e) {}
+    // NOTE: If content doesn't exist then server crashes!
+    // Therefore need to return 404
+    req.respond({ status: 404 });
   }
 }
