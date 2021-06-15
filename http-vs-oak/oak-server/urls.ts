@@ -4,3 +4,5 @@ const websites: Array<string> = [
   "https://www.baidu.com",
   "https://www.yahoo.com",
 ];
+
+export default websites;
